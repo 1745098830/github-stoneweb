@@ -6,56 +6,10 @@
     <title>Unity WebGL Player | SQSM_WEBgL</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/jszip.min.js"></script>
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
-    <!-- 引入 pako 库用于解压 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
     <script>
-      // 存储解压后的数据字典
-      let fileDataDictionary = {};
-
-      // 解压 byte[] 数据的函数
-      function decompressByteArray(compressedDataBase64) {
-          try {
-              // 将 Base64 编码的字符串转换为 Uint8Array
-              const compressedData = new Uint8Array(atob(compressedDataBase64).split("").map(function(c) { return c.charCodeAt(0); }));
-              
-              // 使用 pako 解压缩
-              const decompressedData = pako.ungzip(compressedData, { to: 'string' });
-
-              return decompressedData;
-          } catch (e) {
-              console.error("解压失败: ", e);
-              return null;
-          }
-      }
-
-      // 将解压后的数据存储到字典中
-      function storeDecompressedData(fileName, decompressedData) {
-          fileDataDictionary[fileName] = decompressedData;
-      }
-
-      // 从字典中获取解压后的数据
-      function getDecompressedData(fileName) {
-          return fileDataDictionary[fileName];
-      }
-
-      // 用于 Unity 调用解压函数的接口
-      function decompressAndStoreFile(fileName, compressedDataBase64) {
-          const decompressedData = decompressByteArray(compressedDataBase64);
-          if (decompressedData) {
-              storeDecompressedData(fileName, decompressedData);
-              return decompressedData;
-          }
-          return null;
-      }
-
-      // 通过 Unity 调用此函数来获取解压后的数据
-      function getStoredFileData(fileName) {
-          return getDecompressedData(fileName);
-      }
-
-      // Unity 实例化
       var unityInstance = UnityLoader.instantiate("unityContainer", "Build/githubstone_new.json", {onProgress: UnityProgress});
     </script>
   </head>
@@ -68,21 +22,5 @@
         <div class="title">SQSM_WEBgL</div>
       </div>
     </div>
-
-    <!-- 通过 Unity 和 JavaScript 交互的部分 -->
-    <script>
-      // 示例：Unity 调用 JavaScript 解压并获取数据
-      function loadAndDecompressData(fileName, compressedDataBase64) {
-          const decompressedData = decompressAndStoreFile(fileName, compressedDataBase64);
-          if (decompressedData) {
-              console.log("解压后的数据: ", decompressedData);
-          }
-      }
-
-      // 通过 Unity 与 JavaScript 交互的函数
-      function getDecompressedDataFromUnity(fileName) {
-          return getStoredFileData(fileName);
-      }
-    </script>
   </body>
 </html>
