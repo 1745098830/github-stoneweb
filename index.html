@@ -9,17 +9,18 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/githubstone_new.json", {onProgress: UnityProgress});
+        var unityInstance = UnityLoader.instantiate("unityContainer", "Build/githubstone_new.json", {onProgress: UnityProgress});
+        window.addEventListener("resize", OnResize);
+        // 拆分参数处理逻辑为独立函数
+        function OnResize()
+        {
+            unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
+            unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
+            unityInstance.SendMessage("DebugText", "OnResize");
+        }
     </script>
   </head>
-  <body>
-    <div class="webgl-content">
-      <div id="unityContainer" style="width: 1920px; height: 955px"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-        <div class="title">SQSM_WEBgL</div>
-      </div>
-    </div>
+  <body style="margin:0; overflow:hidden;">
+      <div id="unityContainer"></div>
   </body>
 </html>
