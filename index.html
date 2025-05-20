@@ -14,6 +14,11 @@
         // 拆分参数处理逻辑为独立函数
         function OnResize()
         {
+            const isMobile = window.innerWidth <= 768 ||
+                /Mobi|Android|iPhone/i.test(navigator.userAgent);
+            document.getElementById('gameContainer').style.width =
+                isMobile ? '100%' : '80%';
+
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
             unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
             unityInstance.SendMessage("DebugText", "OnResize");
