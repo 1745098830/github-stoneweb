@@ -14,10 +14,6 @@
         // 拆分参数处理逻辑为独立函数
         function OnResize()
         {
-            var canvas = document.getElementById("#canvas");
-            canvas.clientHeight = document.documentElement.clientHeight;
-            canvas.clientWidth = document.documentElement.clientWidth;
-
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
             unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
             unityInstance.SendMessage("DebugText", "OnResize");
