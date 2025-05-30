@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | SQSM_WEBgL</title>
+    <title> Unity WebGL </title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>
@@ -17,6 +17,50 @@
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
             unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
             unityInstance.SendMessage("DebugText", "OnResize");
+        }
+        // JavaScript: 获取URL参数并解析
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        // 参数映射标题
+        const titleMap = {
+            "TX": "天诩",
+            "SQSM": "石全石美",
+            "Test2": "天灵灵地灵灵",
+            "Test": "天地玄黄宇宙洪荒",
+            "UNITY": "Unity WebGL",
+            "favicon": "天上老君急急如律令"
+        };
+        // 获取参数并设置标题
+        const qybs = getQueryParam("QYBS");
+        if (qybs && titleMap[qybs]) {
+            document.title = titleMap[qybs];
+        }
+        // JavaScript: 动态设置网页图标
+        function setDynamicIcon(iconUrl) {
+            let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = iconUrl;
+            document.head.appendChild(link);
+        }
+        // 替换 favicon
+        function setFavicon(iconName) {
+            const head = document.getElementsByTagName('head')[0];
+            let link = document.querySelector("link[rel~='icon']");
+            if (!link) {
+                link = document.createElement('link');
+                link.rel = 'icon';
+                head.appendChild(link);
+            }
+            link.href = `TemplateData/${iconName}.ico`;
+        }
+
+        // 根据参数 icon 设置 favicon
+        const iconParam = getQueryParam("QYBS");
+        if (iconParam) {
+            setFavicon(iconParam);
         }
     </script>
   </head>
