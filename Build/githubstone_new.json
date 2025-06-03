@@ -1,6 +1,6 @@
 {
 "companyName": "DefaultCompany",
-"productName": "产展示",
+"productName": "Product Display",
 "productVersion": "0.1",
 "dataUrl": "githubstone_new.data.unityweb",
 "wasmCodeUrl": "githubstone_new.wasm.code.unityweb",
