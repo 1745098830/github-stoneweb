@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title> Unity WebGL </title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -23,7 +25,7 @@
 
         #unityContainer {
             width: 100% !important;
-            height: 100%;
+            height: 100% !important;
             background-color: black; /* 可选，设置背景颜色 */
         }
 
@@ -33,50 +35,10 @@
         }
     </style>
     <script>
-        var unityInstance;
-        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-        function initUnity() {
-            unityInstance = UnityLoader.instantiate("unityContainer", "Build/githubstone_new.json", {
-                onProgress: UnityProgress,
-                Module: {
-                    onRuntimeInitialized: function () {
-                        // Unity加载完成后设置canvas尺寸
-                        setCanvasSize();
-                        OnResize();
-                    }
-                }
-            });
-        }
-        // 页面加载完成后初始化
-        window.addEventListener('DOMContentLoaded', function () {
-            initUnity();
-
-            // 添加横屏检测
-            window.addEventListener("resize", function () {
-                OnResize();
-            });
-
-            // 添加方向变化检测
-            window.addEventListener("orientationchange", function () {
-                setTimeout(OnResize, 300); // iOS需要延迟
-            });
-        });
-        // 设置canvas尺寸为视口大小
-        function setCanvasSize() {
-            var canvas = document.querySelector('#unityContainer canvas');
-            if (canvas) {
-                canvas.style.width = "100vw";
-                canvas.style.height = "100vh";
-                canvas.style.display = "block";
-            }
-        }
+        var unityInstance = UnityLoader.instantiate("unityContainer", "Build/githubstone_new.json", { onProgress: UnityProgress });
+        window.addEventListener("resize", OnResize);
         // 拆分参数处理逻辑为独立函数
         function OnResize() {
-            if (!unityInstance) return;
-            // 设置canvas尺寸
-            setCanvasSize();
-
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
             unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
             unityInstance.SendMessage("DebugText", "OnResize");
