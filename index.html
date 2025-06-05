@@ -41,14 +41,17 @@
         function OnResize() {
 
             var canvas = document.getElementById('unity-canvas');
-            // 更新 canvas 尺寸为浏览器窗口的尺寸
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            if (canvas) {
+                // 更新 canvas 尺寸为浏览器窗口的尺寸
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
 
-            // 让 Unity 适应新的 canvas 尺寸
-            if (unityInstance && unityInstance.Module) {
-                // Unity WebGL 中的 `resizeCanvas` 方法
-                unityInstance.Module.resizeCanvas(window.innerWidth, window.innerHeight);
+                // 确保 unityInstance 已初始化
+                if (unityInstance && unityInstance.Module) {
+                    unityInstance.Module.resizeCanvas(window.innerWidth, window.innerHeight);
+                }
+            } else {
+                console.error("Canvas element not found!");
             }
 
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
