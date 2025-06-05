@@ -39,21 +39,6 @@
         window.addEventListener("resize", OnResize);
         // 拆分参数处理逻辑为独立函数
         function OnResize() {
-
-            var canvas = document.getElementById('unity-canvas');
-            if (canvas) {
-                // 更新 canvas 尺寸为浏览器窗口的尺寸
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-
-                // 确保 unityInstance 已初始化
-                if (unityInstance && unityInstance.Module) {
-                    unityInstance.Module.resizeCanvas(window.innerWidth, window.innerHeight);
-                }
-            } else {
-                console.error("Canvas element not found!");
-            }
-
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
             unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
             unityInstance.SendMessage("DebugText", "OnResize");
