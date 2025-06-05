@@ -39,6 +39,21 @@
         window.addEventListener("resize", OnResize);
         // 拆分参数处理逻辑为独立函数
         function OnResize() {
+
+            // 获取屏幕的方向
+            var orientation = window.orientation;
+
+            // 根据方向进行处理
+            if (orientation === 0 || orientation === 180) {
+                // 竖屏
+                document.body.style.transform = 'rotate(90deg)';
+                document.body.style.transformOrigin = 'center';
+            } else {
+                // 横屏
+                document.body.style.transform = 'rotate(0deg)';
+                document.body.style.transformOrigin = 'center';
+            }
+
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
             unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
             unityInstance.SendMessage("DebugText", "OnResize");
