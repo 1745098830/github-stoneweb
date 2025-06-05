@@ -40,15 +40,15 @@
         // 拆分参数处理逻辑为独立函数
         function OnResize() {
 
-            var canvas = document.getElementsByTagName('canvas')[0];
-
+            var canvas = document.getElementById('unity-canvas');
             // 更新 canvas 尺寸为浏览器窗口的尺寸
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            // 重新调整 Unity 渲染器的尺寸
+            // 让 Unity 适应新的 canvas 尺寸
             if (unityInstance && unityInstance.Module) {
-                unityInstance.Module.setCanvasSize(window.innerWidth, window.innerHeight);
+                // Unity WebGL 中的 `resizeCanvas` 方法
+                unityInstance.Module.resizeCanvas(window.innerWidth, window.innerHeight);
             }
 
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
