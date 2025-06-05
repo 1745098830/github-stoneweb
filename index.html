@@ -40,18 +40,15 @@
         // 拆分参数处理逻辑为独立函数
         function OnResize() {
 
-            // 获取屏幕的方向
-            var orientation = window.orientation;
+            var canvas = document.getElementsByTagName('canvas')[0];
 
-            // 根据方向进行处理
-            if (orientation === 0 || orientation === 180) {
-                // 竖屏
-                document.body.style.transform = 'rotate(0deg)';
-                document.body.style.transformOrigin = 'center';
-            } else {
-                // 横屏
-                document.body.style.transform = 'rotate(0deg)';
-                document.body.style.transformOrigin = 'center';
+            // 更新 canvas 尺寸为浏览器窗口的尺寸
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // 重新调整 Unity 渲染器的尺寸
+            if (unityInstance && unityInstance.Module) {
+                unityInstance.Module.setCanvasSize(window.innerWidth, window.innerHeight);
             }
 
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
