@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <title> Unity WebGL </title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -39,9 +38,12 @@
         window.addEventListener("resize", OnResize);
         // 拆分参数处理逻辑为独立函数
         function OnResize() {
+           
             unityInstance.SendMessage("DebugText", "SetWidth", window.innerWidth);
             unityInstance.SendMessage("DebugText", "SetHeight", window.innerHeight);
             unityInstance.SendMessage("DebugText", "OnResize");
+            // 触发Unity中的分辨率更新
+            //unityInstance.SendMessage('DebugText', 'ForceRefresh');
         }
         // JavaScript: 获取URL参数并解析
         function getQueryParam(param) {
